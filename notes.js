@@ -8,8 +8,8 @@ const getNotes = () => {
 // AddNote function
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter((obj) => obj.title === title);
-  if (duplicateNotes.length < 1) {
+  const duplicateNote = notes.find((obj) => obj.title === title);
+  if (!duplicateNote) {
     notes.push({
       title,
       body,
@@ -41,6 +41,18 @@ const listNotes = () => {
   notes.forEach((note) => console.log(chalk.yellow(note.title)));
 };
 
+// Read Note Function
+const readNote = (title) => {
+  const notes = loadNotes();
+  const noteToRead = notes.find((note) => note.title === title);
+  if (noteToRead) {
+    console.log(chalk.inverse(noteToRead.title));
+    console.log(chalk.green(noteToRead.body));
+  } else {
+    console.log(chalk.red.inverse("No Note Found"));
+  }
+};
+
 // Helper Functions: //
 
 //Save Notes Function
@@ -67,4 +79,5 @@ module.exports = {
   addNote,
   removeNote,
   listNotes,
+  readNote,
 };
